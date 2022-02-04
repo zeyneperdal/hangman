@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <link rel="stylesheet" href="main.css">
+        
+<style>
+/* Variabes */
+/* Mixin's */
+body {
+  background: cadetblue;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #fff;
+  height: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.wrappper {
+  width: 100%;
+  margin: 0 auto;
+}
+.wrappper:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+canvas {
+  color: #fff;
+  border: #fff dashed 2px;
+  padding: 15px;
+}
+
+h1, h2, h3 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  text-transform: uppercase;
+  margin: 5px 0;
+}
+
+h1 {
+  font-size: 2.6em;
+}
+
+h2 {
+  font-size: 1.6em;
+}
+
+p {
+  font-size: 1.6em;
+}
+
+#alphabet {
+  margin: 15px auto;
+  padding: 0;
+  max-width: 900px;
+}
+#alphabet:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#alphabet li {
+  float: left;
+  margin: 0 10px 10px 0;
+  list-style: none;
+  width: 35px;
+  height: 30px;
+  padding-top: 10px;
+  background: #fff;
+  color: cadetblue;
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border: solid 1px #fff;
+}
+#alphabet li:hover {
+  background: cadetblue;
+  border: solid 1px #fff;
+  color: #fff;
+}
+
+#my-word {
+  margin: 0;
+  display: block;
+  padding: 0;
+  display: block;
+}
+
+#my-word li {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  display: inline-block;
+  padding: 0 10px;
+  font-size: 1.6em;
+}
+
+.active {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  -moz-transition: all 1s ease-in;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  cursor: default;
+}
+.active:hover {
+  -moz-transition: all 1s ease-in;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  -moz-transition: all 1s ease-in;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+#mylives {
+  font-size: 1.6em;
+  text-align: center;
+  display: block;
+}
+
+button {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -khtml-border-radius: 5px;
+  background: cadetblue;
+  color: #fff;
+  border: solid 1px #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 18px 10px;
+  width: 180px;
+  margin: 10px;
+  outline: none;
+}
+button:hover {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background: #fff;
+  border: solid 1px #fff;
+  color: cadetblue;
+}
+
+@media (max-width: 767px) {
+  #alphabet {
+    padding: 0 0 0 15px;
+  }
+}
+@media (max-width: 480px) {
+  #alphabet {
+    padding: 0 0 0 25px;
+  }
+}
+    
+    
+ 
+:root {
+	--delay: 0;
+	--duration: 800ms;
+	--iterations: 1;
+}
+/* •·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•·•· */
+
+
+.reveal-text,
+.reveal-text::after {
+	-webkit-animation-delay: var(--animation-delay, 2s);
+	        animation-delay: var(--animation-delay, 2s);
+	-webkit-animation-iteration-count: var(--iterations, 1);
+	        animation-iteration-count: var(--iterations, 1);
+	-webkit-animation-duration: var(--duration, 800ms);
+	        animation-duration: var(--duration, 800ms);
+	-webkit-animation-fill-mode: both;
+	        animation-fill-mode: both;
+	-webkit-animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+	        animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.reveal-text {
+	--animation-delay: var(--delay, 0);
+	--animation-duration: var(--duration, 800ms);
+	--animation-iterations: var(--iterations, 1);
+	position: relative;
+	font-size: 10vw;
+	-webkit-animation-name: clip-text;
+	        animation-name: clip-text;
+	color: #FFF;
+	white-space: nowrap;
+	cursor: default
+	
+}
+
+.reveal-text::after {
+		content: "";
+		position: absolute;
+		z-index: 999;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #f2f98b;
+		transform: scaleX(0);
+		transform-origin: 0 50%;
+		pointer-events: none;
+		-webkit-animation-name: text-revealer;
+		        animation-name: text-revealer;
+	}
+
+
+@-webkit-keyframes clip-text {
+	from {
+		-webkit-clip-path: inset(0 100% 0 0);
+		        clip-path: inset(0 100% 0 0);
+	}
+	to {
+		-webkit-clip-path: inset(0 0 0 0);
+		        clip-path: inset(0 0 0 0);
+	}
+}
+
+
+@keyframes clip-text {
+	from {
+		-webkit-clip-path: inset(0 100% 0 0);
+		        clip-path: inset(0 100% 0 0);
+	}
+	to {
+		-webkit-clip-path: inset(0 0 0 0);
+		        clip-path: inset(0 0 0 0);
+	}
+}
+
+
+@-webkit-keyframes text-revealer {
+	
+	0%, 50% {
+		transform-origin: 0 50%;
+	}
+	
+	60%, 100% {
+		transform-origin: 100% 50%;		
+	}
+
+	
+	60% {
+		transform: scaleX(1);
+	}
+	
+	100% {
+		transform: scaleX(0);
+	}
+}
+
+
+@keyframes text-revealer {
+	
+	0%, 50% {
+		transform-origin: 0 50%;
+	}
+	
+	60%, 100% {
+		transform-origin: 100% 50%;		
+	}
+
+	
+	60% {
+		transform: scaleX(1);
+	}
+	
+	100% {
+		transform: scaleX(0);
+	}
+}   
+    
+    
+/* JUMP */
+h1 {
+ 
+  width: 100%;
+  height: 100px;
+  margin: auto;
+  display: block;
+  text-align: center;
+    padding-bottom: 9%;
+    padding-top: 2%;
+    position: relative;
+		z-index: 999;
+}
+
+h1 span {
+  position: relative;
+  top: 2%;
+  display: inline-block;
+    padding-bottom: 20px;
+  -webkit-animation: bounce 0.3s ease infinite alternate;
+  font-size: 80px;
+  color: #fff;
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+    0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent, 0 8px 0 transparent,
+    0 9px 0 transparent, 0 10px 10px rgba(0, 0, 0, 0.4);
+}
+
+h1 span:nth-child(2) {
+  -webkit-animation-delay: 0.1s;
+}
+
+h1 span:nth-child(3) {
+  -webkit-animation-delay: 0.2s;
+}
+
+h1 span:nth-child(4) {
+  -webkit-animation-delay: 0.3s;
+}
+
+h1 span:nth-child(5) {
+  -webkit-animation-delay: 0.4s;
+}
+
+h1 span:nth-child(6) {
+  -webkit-animation-delay: 0.5s;
+}
+
+h1 span:nth-child(7) {
+  -webkit-animation-delay: 0.6s;
+}
+
+h1 span:nth-child(8) {
+  -webkit-animation-delay: 0.2s;
+}
+
+h1 span:nth-child(9) {
+  -webkit-animation-delay: 0.3s;
+}
+
+h1 span:nth-child(10) {
+  -webkit-animation-delay: 0.4s;
+}
+
+h1 span:nth-child(11) {
+  -webkit-animation-delay: 0.5s;
+}
+
+h1 span:nth-child(12) {
+  -webkit-animation-delay: 0.6s;
+}
+
+h1 span:nth-child(13) {
+  -webkit-animation-delay: 0.7s;
+}
+
+h1 span:nth-child(14) {
+  -webkit-animation-delay: 0.8s;
+}
+
+/* ANIMATION */
+@-webkit-keyframes bounce {
+  100% {
+    top: -20px;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+      0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc, 0 9px 0 #ccc,
+      0 50px 25px rgba(0, 0, 0, 0.2);
+  }
+}
+
+
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+        
+        
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>
+  <span>h</span>
+  <span>a</span>
+  <span>n</span>
+  <span>g</span>
+  <span>m</span>
+  <span>a</span>
+  <span>n</span>
+</br>
+  <span>g</span>
+  <span>a</span>
+  <span>m</span>
+  <span>e</span>
+</h1>
+            
+            
+            
+    <p>Use the alphabet below to guess the word, or click hint to get a clue. </p>
+</div>
+<div class="wrapper">
+    <div id="buttons">
+    </div>  
+    <p id="catagoryName"></p>
+    <div id="hold">
+    </div>
+    <p id="mylives"></p>
+    <p id="clue">Clue -</p>  
+     <canvas id="stickman">This Text will show if the Browser does NOT support HTML5 Canvas tag</canvas>
+    <div class="container">
+      <button id="hint">Hint</button>
+      <button id="reset">Play again</button>
+    </div>
+</div>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+  
+      <script id="rendered-js" >
+window.onload = function () {
+
+  var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+  'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+  't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+  var categories; // Array of topics
+  var chosenCategory; // Selected catagory
+  var getHint; // Word getHint
+  var word; // Selected word
+  var guess; // Geuss
+  var geusses = []; // Stored geusses
+  var lives; // Lives
+  var counter; // Count correct geusses
+  var space; // Number of spaces in word '-'
+
+  // Get elements
+  var showLives = document.getElementById("mylives");
+  var showCatagory = document.getElementById("scatagory");
+  var getHint = document.getElementById("hint");
+  var showClue = document.getElementById("clue");
+
+
+
+  // create alphabet ul
+  var buttons = function () {
+    myButtons = document.getElementById('buttons');
+    letters = document.createElement('ul');
+
+    for (var i = 0; i < alphabet.length; i++) {if (window.CP.shouldStopExecution(0)) break;
+      letters.id = 'alphabet';
+      list = document.createElement('li');
+      list.id = 'letter';
+      list.innerHTML = alphabet[i];
+      check();
+      myButtons.appendChild(letters);
+      letters.appendChild(list);
+    }window.CP.exitedLoop(0);
+  };
+
+
+  // Select Catagory
+  var selectCat = function () {
+    if (chosenCategory === categories[0]) {
+      catagoryName.innerHTML = "The Chosen Category Is Musics";
+    } else if (chosenCategory === categories[1]) {
+      catagoryName.innerHTML = "The Chosen Category Is Films";
+    } else if (chosenCategory === categories[2]) {
+      catagoryName.innerHTML = "The Chosen Category Is Cities";
+    }
+  };
+
+  // Create geusses ul
+  result = function () {
+    wordHolder = document.getElementById('hold');
+    correct = document.createElement('ul');
+
+    for (var i = 0; i < word.length; i++) {if (window.CP.shouldStopExecution(1)) break;
+      correct.setAttribute('id', 'my-word');
+      guess = document.createElement('li');
+      guess.setAttribute('class', 'guess');
+      if (word[i] === "-") {
+        guess.innerHTML = "-";
+        space = 1;
+      } else {
+        guess.innerHTML = "_";
+      }
+
+      geusses.push(guess);
+      wordHolder.appendChild(correct);
+      correct.appendChild(guess);
+    }window.CP.exitedLoop(1);
+  };
+
+  // Show lives
+  comments = function () {
+    showLives.innerHTML = "You have " + lives + " lives";
+    if (lives < 1) {
+      showLives.innerHTML = "Game Over";
+    }
+    for (var i = 0; i < geusses.length; i++) {if (window.CP.shouldStopExecution(2)) break;
+      if (counter + space === geusses.length) {
+        showLives.innerHTML = "You Win!";
+      }
+    }window.CP.exitedLoop(2);
+  };
+
+  // Animate man
+  var animate = function () {
+    var drawMe = lives;
+    drawArray[drawMe]();
+  };
+
+
+  // Hangman
+  canvas = function () {
+
+    myStickman = document.getElementById("stickman");
+    context = myStickman.getContext('2d');
+    context.beginPath();
+    context.strokeStyle = "#fff";
+    context.lineWidth = 2;
+  };
+
+  head = function () {
+    myStickman = document.getElementById("stickman");
+    context = myStickman.getContext('2d');
+    context.beginPath();
+    context.arc(60, 25, 10, 0, Math.PI * 2, true);
+    context.stroke();
+  };
+
+  draw = function ($pathFromx, $pathFromy, $pathTox, $pathToy) {
+
+    context.moveTo($pathFromx, $pathFromy);
+    context.lineTo($pathTox, $pathToy);
+    context.stroke();
+  };
+
+  frame1 = function () {
+    draw(0, 150, 150, 150);
+  };
+
+  frame2 = function () {
+    draw(10, 0, 10, 600);
+  };
+
+  frame3 = function () {
+    draw(0, 5, 70, 5);
+  };
+
+  frame4 = function () {
+    draw(60, 5, 60, 15);
+  };
+
+  torso = function () {
+    draw(60, 36, 60, 70);
+  };
+
+  rightArm = function () {
+    draw(60, 46, 100, 50);
+  };
+
+  leftArm = function () {
+    draw(60, 46, 20, 50);
+  };
+
+  rightLeg = function () {
+    draw(60, 70, 100, 100);
+  };
+
+  leftLeg = function () {
+    draw(60, 70, 20, 100);
+  };
+
+  drawArray = [rightLeg, leftLeg, rightArm, leftArm, torso, head, frame4, frame3, frame2, frame1];
+
+
+  // OnClick Function
+  check = function () {
+    list.onclick = function () {
+      var geuss = this.innerHTML;
+      this.setAttribute("class", "active");
+      this.onclick = null;
+      for (var i = 0; i < word.length; i++) {if (window.CP.shouldStopExecution(3)) break;
+        if (word[i] === geuss) {
+          geusses[i].innerHTML = geuss;
+          counter += 1;
+        }
+      }window.CP.exitedLoop(3);
+      var j = word.indexOf(geuss);
+      if (j === -1) {
+        lives -= 1;
+        comments();
+        animate();
+      } else {
+        comments();
+      }
+    };
+  };
+
+
+  // Play
+  play = function () {
+    categories = [
+    ["stay", "shivers", "swansea", "ghost", "sacrifice", "enemy"],
+    ["alien", "dirty-harry", "gladiator", "finding-nemo", "jaws"],
+    ["manchester", "milan", "madrid", "amsterdam", "prague"]];
+
+
+    chosenCategory = categories[Math.floor(Math.random() * categories.length)];
+    word = chosenCategory[Math.floor(Math.random() * chosenCategory.length)];
+    word = word.replace(/\s/g, "-");
+    console.log(word);
+    buttons();
+
+    geusses = [];
+    lives = 10;
+    counter = 0;
+    space = 0;
+    result();
+    comments();
+    selectCat();
+    canvas();
+  };
+
+  play();
+
+  // Hint
+
+  hint.onclick = function () {
+
+    hints = [
+    ["The Kid LAROI & Justin Bieber", "Ed Sheeran", "GAYLE", "Dua Lipa", "The Weeknd", "Imagine Dragons X JID"],
+    ["Science-Fiction horror film", "1971 American action film", "Historical drama", "Anamated Fish", "Giant great white shark"],
+    ["Northern city in the UK", "Home of AC and Inter", "Spanish capital", "Netherlands capital", "Czech Republic capital"]];
+
+
+    var catagoryIndex = categories.indexOf(chosenCategory);
+    var hintIndex = chosenCategory.indexOf(word);
+    showClue.innerHTML = "Clue: - " + hints[catagoryIndex][hintIndex];
+  };
+
+  // Reset
+
+  document.getElementById('reset').onclick = function () {
+    correct.parentNode.removeChild(correct);
+    letters.parentNode.removeChild(letters);
+    showClue.innerHTML = "";
+    context.clearRect(0, 0, 400, 400);
+    play();
+  };
+};
+//# sourceURL=pen.js
+    </script>
+    </script>
+    </body>
+</html>
